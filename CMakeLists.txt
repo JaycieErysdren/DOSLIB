@@ -28,15 +28,10 @@ set(CMAKE_BUILD_TYPE Debug)
 if(CMAKE_GENERATOR STREQUAL "Watcom WMake")
 	set(WATCOM TRUE)
 	set(COMPILER_EXTENSION w)
-endif()
-
-if(CMAKE_C_COMPILER_ID STREQUAL "DJGPP")
+elseif(CMAKE_C_COMPILER_ID STREQUAL "DJGPP")
 	set(DJGPP TRUE)
 	set(COMPILER_EXTENSION d)
-endif()
-
-## Open Watcom v2 and DJGPP gate
-if(NOT WATCOM AND NOT DJGPP)
+else()
 	message(FATAL_ERROR "DOSLIB can only be compiled with Open Watcom v2 or DJGPP.")
 endif()
 
@@ -62,10 +57,6 @@ if(WATCOM)
 	add_compile_options("$<$<COMPILE_LANGUAGE:C>:-za99>")
 	add_compile_options("$<$<COMPILE_LANGUAGE:C>:-bt=dos32x>")
 	add_compile_options("$<$<COMPILE_LANGUAGE:C>:-bcl=dos32x>")
-endif()
-
-if(DJGPP)
-	##add_compile_options("$<$<COMPILE_LANGUAGE:C>:-S>")
 endif()
 
 ## Set project names
